@@ -3,15 +3,21 @@
 const endPoint = 'https://almost-afced-default-rtdb.firebaseio.com/';
 
 // FIXME:  GET ALL AUTHORS
-const getAuthors = () => new Promise((resolve, reject) => {
-  fetch(`${endPoint}/authors.json`, {
+const getAuthors = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endPoint}/authors.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'applications/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch(reject);
 });
 
@@ -71,19 +77,7 @@ const updateAuthor = (payload) => new Promise((resolve, reject) => {
 
 // TODO: GET A SINGLE AUTHOR'S BOOKS
 const getAuthorBooks = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endPoint}/authors/${firebaseKey}.json`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(data))
-    .catch(reject);
-});
-
-const favoriteAuthor = () => new Promise((resolve, reject) => {
-  fetch(`${endPoint}/authors.json?orderBy="favorite"&equalTo=true`, {
+  fetch(`${endPoint}/books.json?orderBy="author_id"&equalTo="${firebaseKey}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -91,6 +85,21 @@ const favoriteAuthor = () => new Promise((resolve, reject) => {
   })
     .then((response) => response.json())
     .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
+const favoriteAuthor = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endPoint}/authors.json?orderBy="uid"&equalTo"${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const favoriteA = Object.values(data).filter((item) => item.favorite);
+      resolve(favoriteA);
+    })
     .catch(reject);
 });
 
