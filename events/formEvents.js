@@ -14,8 +14,8 @@ const formEvents = (user) => {
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
         author_id: document.querySelector('#author_id').value,
-        sale: document.querySelector('#sale').ariaChecked,
-        uid: user.id
+        sale: document.querySelector('#sale').checked,
+        uid: user.uid
       };
 
       createBook(payload).then(({ name }) => {
@@ -36,12 +36,13 @@ const formEvents = (user) => {
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
         author_id: document.querySelector('#author_id').value,
-        sale: document.querySelector('#sale').ariaChecked,
+        sale: document.querySelector('#sale').checked,
         firebaseKey,
+        uid: user.uid
       };
 
       updateBook(payload).then(() => {
-        getBooks().then(showBooks);
+        getBooks(user).then(showBooks);
       });
     }
 
@@ -51,7 +52,7 @@ const formEvents = (user) => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
-        uid: user.id,
+        uid: user.uid
       };
 
       createAuthor(payload).then(({ name }) => {
@@ -70,9 +71,10 @@ const formEvents = (user) => {
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
         firebaseKey,
+        uid: user.uid
       };
       updateAuthor(payload).then(() => {
-        getAuthors().then(showAuthors);
+        getAuthors(user.uid).then(showAuthors);
       });
     }
   });

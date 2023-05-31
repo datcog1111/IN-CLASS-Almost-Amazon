@@ -1,6 +1,6 @@
-// import client from '../utils/client';
+import client from '../utils/client';
 
-const endPoint = 'https://almost-afced-default-rtdb.firebaseio.com/';
+const endPoint = client.databaseURL;
 
 // FIXME:  GET ALL AUTHORS
 const getAuthors = (uid) => new Promise((resolve, reject) => {
@@ -36,8 +36,8 @@ const createAuthor = (payload) => new Promise((resolve, reject) => {
 });
 
 // FIXME: GET SINGLE AUTHOR
-const getSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endPoint}/authors/${firebaseKey}.json`, {
+const getSingleAuthor = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endPoint}/authors.json?orderBy="uid"&equalTo"${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
