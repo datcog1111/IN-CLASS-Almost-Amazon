@@ -38,11 +38,11 @@ const formEvents = (user) => {
         author_id: document.querySelector('#author_id').value,
         sale: document.querySelector('#sale').checked,
         firebaseKey,
-        uid: user.uid
+
       };
 
       updateBook(payload).then(() => {
-        getBooks(user).then(showBooks);
+        getBooks(user.uid).then(showBooks);
       });
     }
 
