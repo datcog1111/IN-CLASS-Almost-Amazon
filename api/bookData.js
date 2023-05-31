@@ -1,7 +1,6 @@
-// import client from '../utils/client';
-// API CALLS FOR BOOKS
+import client from '../utils/client';
 
-const endPoint = 'https://almost-afced-default-rtdb.firebaseio.com/';
+const endPoint = client.databaseURL;
 
 // TODO: GET BOOKS
 const getBooks = (uid) => new Promise((resolve, reject) => {

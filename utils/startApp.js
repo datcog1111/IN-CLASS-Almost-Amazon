@@ -18,7 +18,7 @@ const startApp = (user) => {
   navigationEvents(user); // ATTACH THE EVENT LISTENERS TO THE NAVBAR
 
   getBooks(user.uid).then((books) => showBooks(books));
-  getAuthors().then((authors) => showAuthors(authors));
+  getAuthors(user.uid).then((authors) => showAuthors(authors));
 
   // TODO: Put all books on the DOM on App load
 };
